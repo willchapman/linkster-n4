@@ -1,13 +1,13 @@
-# linkster-ax
-A utility automating many-to-many links in Niagara AX
+# linkster-n4
+A utility automating many-to-many links in Niagara N4
 
 ## Backwards Compatibility Note
-This module is built with the following version of AX
-  Niagara AX 3.8.38
+This module is built with the following version of N4
+  Niagara N4 4.2.36.4 (Pre release)
 
 Although it is built and version'ed for this build, it has no version dependency
-and SHOULD be able to work all the way back to 3.0.  However, only official testing
-has been done back to 3.5.  
+and SHOULD be able to work all the way back to 4.0.  However, only official testing
+has been done back to 4.2.
 
-If you find issues in older version of AX, please submit it here and I will 
-investigate.
+Note that this only automates value links, it does not know how to work
+with the relation links.
