@@ -1,0 +1,8 @@
+<types>
+    <type name="LinksterSide" class="com.raxware.linkster.ui.BLinksterSide"/>
+    <type name="LinksterToolView" class="com.raxware.linkster.ui.BLinksterToolView">
+        <agent>
+            <on type="linkster:LinksterService"/>
+        </agent>
+    </type>
+</types>

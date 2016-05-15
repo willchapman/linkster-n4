@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2016 Will Chapman. All Rights Reserved.
+ */
+
+ext {
+    name = 'linkster'   // Formerly Linkster-AX
+    project.version = '1.0.0'
+    project.group = 'Raxware' // The vendor name
+    project.description = "Automates creating many-to-many links in Niagara"
+
+    niagaraHome = System.getenv("niagara_home")
+    if (niagaraHome == null) {
+        logger.error('niagara_home environment variable not set')
+    }
+}
+
+niagaraModule {
+    preferredSymbol = "lnkstr"
+    runtimeProfile = "wb"
+    moduleName = "linkster"
+}
+
+dependencies {
+    compile "Tridium:nre:4.0.0"
+    compile "Tridium:baja:4.0.0"
+    compile "Tridium:bajaui-wb:4.0.0"
+    compile "Tridium:gx-rt:4.0.0"
+    compile "Tridium:workbench-wb:4.0.0"
+
+    compile "Raxware:linkster-rt:1.0.0"
+}
+
+jar {
+    from("src") {
+        include "com/raxware/linkster/res/icons/*.png"
+    }
+}
+
+

@@ -1,0 +1,4 @@
+<types>
+    <!--com.raxware.linkster-->
+    <type class="com.raxware.linkster.BLinksterService" name="LinksterService"/>
+</types>

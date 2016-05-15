@@ -1,0 +1,7 @@
+hs_err_pid*
+/gradlew
+/gradlew.bat
+/gradle
+/.idea
+/.gradle
+build

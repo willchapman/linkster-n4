@@ -1,0 +1,55 @@
+import groovy.io.FileType
+import groovy.io.FileVisitResult
+
+def discoveredProjects = [:] as Map<String, File>
+
+ext {
+    // To explicitly define sub-project folders, name them in the array like this
+    niagaraRoots = ['linkster-rt', 'linkster-wb']
+
+    // CONFIGURE any directories to exclude from search for nested sub-projects
+    excludeDirs = ['.git', 'build', 'out', 'src', 'srcTest']
+}
+
+// OR set the 'userRepos' gradle property.
+//
+if (hasProperty('userRepos')) {
+    settings.ext.niagaraRoots += userRepos.split(",").collect()
+}
+
+// my-settings.gradle.
+//
+def mySettings = file('my-settings.gradle')
+if (mySettings.exists()) {
+    apply from: mySettings
+}
+
+// DO NOT MODIFY the niagaraRoots configuration
+niagaraRoots.collect({ file(it) }).findAll({ it.exists() }).each { File projectRoot ->
+    projectRoot.traverse(
+            type: FileType.DIRECTORIES,
+            preRoot: true,
+            preDir: { File projectDir ->
+                def projectName = projectDir.name
+                if (excludeDirs.contains(projectName)) {
+                    return FileVisitResult.SKIP_SUBTREE
+                }
+
+                File buildScript = new File(projectDir, "${projectName}.gradle")
+                if (buildScript.exists()) {
+                    discoveredProjects[projectName] = projectDir
+                    include projectName
+                    return FileVisitResult.SKIP_SUBTREE
+                }
+            }
+    )
+}
+
+// Set rootProject.name for your project
+rootProject.name = 'linkster'
+rootProject.children.each { project ->
+    project.projectDir = discoveredProjects[project.name]
+    project.buildFileName = "${project.name}.gradle"
+    assert project.projectDir.isDirectory()
+    assert project.buildFile.isFile()
+}
